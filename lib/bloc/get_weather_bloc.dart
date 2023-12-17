@@ -18,13 +18,12 @@ class GetWeatherBloc extends Bloc<GetWeatherEvent, GetWeatherState> {
           status: LoadingStatus.pure,
           baseModel: [],
         )) {
-    on<GetFullWeather>((event, emit) async {
+    on<GetFullWeather>((event, emit,[String name='Tashkent']) async {
       emit(state.copyWith(status: LoadingStatus.loading));
       try {
-        await Future.delayed(const Duration(seconds: 4));
         final dio = Dio();
         final response = await dio.get(
-            "https://api.openweathermap.org/data/2.5/weather?q=Tashkent&appid=b0a8ad29b048c9ddd6cbb8f6b8d5a116");
+            "https://api.openweathermap.org/data/2.5/weather?q=$name&appid=b0a8ad29b048c9ddd6cbb8f6b8d5a116");
         final weathers = BaseModel.fromJson(response.data);
 
 
